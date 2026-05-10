@@ -1,54 +1,28 @@
-# .
+# Hardware Deal Tracker (Frontend)
 
-This template should help get you started developing with Vue 3 in Vite.
+Eine moderne Single-Page-Application (SPA) auf Basis von Vue.js zum Tracken und Verwalten von PC-Hardware-Deals auf dem Gebrauchtmarkt. [cite_start]Entwickelt als Teil des Moduls Webtechnologien an der HTW Berlin (Milestone 2)[cite: 140, 142, 143].
 
-## Recommended IDE Setup
+## Tech-Stack
+* [cite_start]**Framework:** Vue 3 (Composition API mit `<script setup>`) [cite: 305, 306]
+* [cite_start]**Sprache:** TypeScript (für bessere Typsicherheit) [cite: 109, 170]
+* [cite_start]**Build-Tool:** Vite [cite: 119, 124]
+* [cite_start]**Router:** Vue Router für die Navigation [cite: 156, 184]
+* [cite_start]**Testing:** Vitest für Unit-Tests [cite: 156, 186]
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features (Milestone 2)
+* [cite_start]Implementierung einer eigenen Komponente (`HardwareDeal.vue`) [cite: 282, 331]
+* [cite_start]Dynamisches Rendering einer Liste von Hardware-Entitäten mittels `v-for` [cite: 439, 680]
+* [cite_start]Saubere Trennung von Views und Komponenten [cite: 390, 392]
 
-## Recommended Browser Setup
+## Projekt starten
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+### 1. Abhängigkeiten installieren
+[cite_start]Zuerst müssen alle benötigten npm-Pakete heruntergeladen werden[cite: 114, 163]:
+```bash
 npm install
-```
+Um den Code gemäß der Prettier-Vorgaben glattzubügeln:
+npm run format
 
-### Compile and Hot-Reload for Development
-
-```sh
+ntwicklungsserver starten
+Startet die App lokal auf http://localhost:5173/:
 npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
