@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import HardwareDeal from '../components/HardwareDeal.vue'
 
-// Hardcodierte Beispiel-Daten für Milestone 2
-const deals = ref([
-  { id: 1, name: "AMD Ryzen 7 3700X", condition: "Gebraucht - eBay", price: 85.0 },
-  { id: 2, name: "Nvidia RTX 3060", condition: "Gebraucht - Kleinanzeigen", price: 220.0 },
-  { id: 3, name: "Kingston Fury DDR4 (KF436C17BB2A/8)", condition: "Neu - Mindfactory", price: 25.0 }
-])
+// Das <any[]> killt den "never"-Error
+const deals = ref<any[]>([])
+
+const loadDeals = () => {
+  const endpoint = 'https://hardware-tracker-backend-it8g.onrender.com/deals'
+
+  // Das { method: 'GET' } direkt hier drin killt den RequestInit-Error
+  fetch(endpoint, { method: 'GET' })
+    .then(response => response.json())
+    .then(result => {
+      deals.value = result
+    })
+    .catch(error => console.log('Fehler beim Fetchen:', error))
+}
+
+onMounted(() => {
+  loadDeals()
+})
 </script>
 
 <template>
