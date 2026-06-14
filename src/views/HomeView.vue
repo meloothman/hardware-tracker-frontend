@@ -1,104 +1,145 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import HardwareDeal from '../components/HardwareDeal.vue'
+<main>
+<h1>🔥 Hardware Deal Tracker</h1>
 
-// Das <any[]> killt den "never"-Error
-const deals = ref<any[]>([])
+<p class="subtitle">
+  Finde, speichere und vergleiche Hardware-Schnäppchen
+</p>
 
-// --- NEU FÜR M4: Variablen für das Formular ---
-const newName = ref('')
-const newType = ref('')
-const newPrice = ref(0)
+<div class="form-container">
+  <h3>Neuen Deal hinzufügen</h3>
 
-// Den Endpoint packen wir nach oben, damit GET und POST ihn nutzen können
-const endpoint = 'https://hardware-tracker-backend-it8g.onrender.com/deals'
+  <input v-model="newName" placeholder="Hardware Name" />
+  <input v-model="newType" placeholder="Typ (GPU, CPU, RAM ...)" />
+  <input v-model="newPrice" type="number" placeholder="Preis in €" />
+  <input v-model="newCondition" placeholder="Zustand" />
+  <input v-model="newLink" placeholder="Link zum Deal" />
 
-const loadDeals = () => {
-  // Das { method: 'GET' } direkt hier drin killt den RequestInit-Error
-  fetch(endpoint, { method: 'GET' })
-    .then(response => response.json())
-    .then(result => {
-      deals.value = result
-    })
-    .catch(error => console.log('Fehler beim Fetchen:', error))
-}
+  <button @click="submitDeal">
+    Deal speichern
+  </button>
+</div>
 
-// --- NEU FÜR M4: Die POST-Methode, um Deals in die DB zu schießen ---
-const submitDeal = () => {
-  const newDeal = {
-    name: newName.value,
-    type: newType.value,
-    price: newPrice.value
-  }
-
-  fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newDeal)
-  })
-    .then(response => response.json())
-    .then(() => {
-      // Wenn gespeichert: Felder wieder leeren und Liste sofort neu laden
-      newName.value = ''
-      newType.value = ''
-      newPrice.value = 0
-      loadDeals()
-    })
-    .catch(error => console.log('Fehler beim POST:', error))
-}
-
-onMounted(() => {
-  loadDeals()
-})
-</script>
-
-<template>
-  <main>
-    <h1>Hardware Deal Tracker</h1>
-
-    <div class="form-container">
-      <h3>Neuen Deal eintragen</h3>
-      <input v-model="newName" placeholder="Hardware (z.B. RTX 4090)" />
-      <input v-model="newType" placeholder="Typ (z.B. GPU)" />
-      <input v-model="newPrice" type="number" placeholder="Preis in €" />
-      <button @click="submitDeal">Speichern</button>
-    </div>
-
-    <div class="deal-container">
-      <HardwareDeal
-        v-for="item in deals"
-        :key="item.id"
-        :deal="item"
-      />
-    </div>
-  </main>
-</template>
-
+<div class="deal-container">
+  <HardwareDeal
+    v-for="d in deals"
+    :key="d.id"
+    :deal="d"
+    @refresh="loadDeals"
+  />
+</div>
+</main>
 <style scoped>
 main {
-  text-align: center;
-  padding: 20px;
-  font-family: sans-serif;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-/* --- NEU FÜR M4: Styling fürs Formular --- */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #8b5cf6
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  text-align: center;
+  color: #94a3b8;
+  margin-bottom: 40px;
+}
+
 .form-container {
-  margin: 20px auto;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #f9f9f9;
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 15px;
+
+  padding: 25px;
+
+  margin-bottom: 40px;
+
+  background: rgba(255,255,255,0.05);
+
+  backdrop-filter: blur(15px);
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.form-container h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+input {
+  padding: 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  background: rgba(255,255,255,0.08);
+
+  color: white;
+
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 15px rgba(59,130,246,.4);
+}
+
+button {
+  grid-column: 1 / -1;
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
 }
 
 .deal-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fill, minmax(320px, 1fr));
+
+  gap: 20px;
 }
 </style>

@@ -7,19 +7,55 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style>
-/* Reset und cleaner Darkmode für die ganze App */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  background-color: #121212;
-  color: #e0e0e0;
-  font-family: sans-serif;
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+
+  background:
+    radial-gradient(circle at top left, #2563eb22, transparent 40%),
+    radial-gradient(circle at bottom right, #7c3aed22, transparent 40%),
+    #0f172a;
+
+  color: #f8fafc;
 }
 
 #app {
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+a {
+  color: inherit;
+}
+
+input,
+button {
+  font-family: inherit;
 }
 </style>
