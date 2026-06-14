@@ -47,7 +47,7 @@ onMounted(loadDeals)
 
 <template>
   <main>
-    <h1>🔥 Hardware Deal Tracker</h1>
+    <h1> 🏷️ Hardware Deal Tracker 🖥️ </h1>
 
     <p class="subtitle">
       Finde, speichere und vergleiche Hardware-Schnäppchen
